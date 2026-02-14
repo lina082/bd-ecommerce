@@ -1,7 +1,42 @@
-Se desea diseñar la base de datos para una plataforma de comercio electrónico que permita a los usuarios registrarse, vender productos y realizar compras en línea.
-En la plataforma existen usuarios, quienes deben registrarse proporcionando su nombre, apellido, documento, fecha de nacimiento y dirección. La dirección está compuesta por calle, ciudad, departamento y código postal. Un usuario puede registrar varios números de teléfono y varios correos electrónicos. Además, la edad del usuario no se almacena directamente, sino que se calcula a partir de su fecha de nacimiento.
-Los usuarios se clasifican en tres tipos: clientes y vendedores. Todo usuario pertenece a uno de estos tipos. Los clientes pueden realizar pedidos y acumular puntos de fidelidad según sus compras. Los vendedores pueden publicar productos y cuentan con información adicional como nombre de la tienda, calificación y cuenta bancaria. Ambos tipos heredan la información general del usuario.
-Los vendedores publican productos en la plataforma. Cada producto tiene nombre, descripción, precio, stock disponible, peso y dimensiones (alto, ancho y profundidad). Un vendedor puede publicar varios productos, pero cada producto pertenece a un solo vendedor. Para mantener el orden en la plataforma, cada producto debe ser clasificado dentro de una única categoría, cada categoría tiene un id, nombre y palabras clave, aunque una categoría puede albergar una multitud de productos diferentes.
-Los clientes pueden realizar pedidos. Cada pedido tiene una fecha, un estado y un valor total, el cual se calcula automáticamente a partir de los productos incluidos. Un cliente puede realizar varios pedidos, pero cada pedido pertenece a un único cliente.
-Cada pedido está compuesto por uno o varios productos. Para registrar esta información, se almacena el detalle del pedido, donde se indica la cantidad de cada producto y su precio unitario. El subtotal se calcula multiplicando la cantidad por el precio unitario. El detalle del pedido depende directamente del pedido al que pertenece.
-Finalmente, cada pedido genera un pago. El pago registra la fecha, el monto, el método de pago y su estado. Cada pedido tiene un único pago asociado.
+# E-Commerce Medellín: Modelo ER
+## Base de Datos para Plataforma de Comercio Electrónico
+
+---
+
+Plataforma de comercio electrónico en Medellín que permite a usuarios registrarse, vender y comprar productos en línea.
+
+### Usuarios y Especialización
+
+Los **usuarios** `[ENTIDAD]` se registran con **documento** `[CLAVE 🔑]`, **nombre** `[ATRIBUTO]`, **apellido** `[ATRIBUTO]`, **fecha de nacimiento** `[ATRIBUTO]` y **dirección** `[COMPUESTO 📍]` (calle, ciudad, departamento, código postal). Pueden registrar múltiples **teléfonos** `[MULTIVALUADO {📞}]` y **correos** `[MULTIVALUADO {📧}]`. La **edad** `[DERIVADO ⚙️]` se calcula desde la fecha de nacimiento.
+
+Todo usuario es `[ESPECIALIZACIÓN TOTAL Y DISJUNTA]` **cliente** `[ENTIDAD]`, **vendedor** `[ENTIDAD]` o **administrador** `[ENTIDAD]`. Los clientes acumulan **puntos de fidelidad** `[ATRIBUTO]`. Los vendedores tienen **nombre de tienda** `[ATRIBUTO]`, **calificación** `[ATRIBUTO]` y **cuenta bancaria** `[ATRIBUTO]`.
+
+### Productos y Categorías
+
+Los vendedores **publican** `[1:N]` **productos** `[ENTIDAD]` con **nombre**, **descripción**, **precio**, **stock**, **peso** y **dimensiones** `[COMPUESTO 📍]` (alto, ancho, profundidad). Cada producto **pertenece a** `[N:1]` una **categoría** `[ENTIDAD]`.
+
+### Pedidos y Pagos
+
+Los clientes **realizan** `[1:N]` **pedidos** `[ENTIDAD]` con **fecha**, **estado** y **valor total** `[DERIVADO ⚙️]`. Cada pedido **contiene** `[N:M]` productos mediante **detalle_pedido** `[ENTIDAD DÉBIL ⚠️]`, que registra **cantidad**, **precio unitario** y **subtotal** `[DERIVADO ⚙️]`. Cada pedido **genera** `[1:1]` un **pago** `[ENTIDAD]` con **fecha**, **monto**, **método** y **estado**.
+
+---
+
+## Leyenda
+
+| Símbolo | Tipo |
+|---------|------|
+| 🔑 | Clave |
+| 📍 | Compuesto |
+| {📧} | Multivaluado |
+| ⚙️ | Derivado |
+| ⚠️ | Entidad débil |
+
+## Resumen
+
+**9 Entidades:** Usuario, Cliente, Vendedor, Administrador, Producto, Categoría, Pedido, Detalle_Pedido, Pago
+
+**6 Relaciones:** ES_UN, Publica (1:N), Pertenece_a (N:1), Realiza (1:N), Contiene (N:M), Genera (1:1)
+
+---
+
+_Modelo ER - E-Commerce Medellín_
